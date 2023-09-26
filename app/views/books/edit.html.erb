@@ -1,13 +1,27 @@
-<h1>Edit Book</h1>
-<% if flash.now[:notice] %>
-  <p><%= flash.now[:notice] %></p>
+<h1>Editing Book</h1>
+<% if @book.errors.any? %>
+  <%= @book.errors.count %>errors prohibited this book from being saved
+  <ul>
+    <% @book.errors.full_messages.each do |message| %>
+      <il><%= message %></il>
+    <% end %>
+  </ul>
 <% end %>
+
 
 <%= form_with model: @book, url: book_path(@book.id), method: :patch do |f| %>
-  <p>Title</p><%= f.text_field :title %>
-  <p>Body</p><%= f.text_area :body %>
-  <%= f.submit "Update Book" %>
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :body %>
+    <%= f.text_area :body %>
+  </div>
+  <div class="click">
+    <%= f.submit "Update Book" %>
+  </div>
 <% end %>
 
-<%= link_to 'Show', book_path(@book), class: "show_#{@book_id}" %>
-<%= link_to 'Back', book_path, class:"back" %>
+<%= link_to 'Show', book_path(@book) %> |
+<%= link_to 'Back', books_path %>
